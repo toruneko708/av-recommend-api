@@ -1,111 +1,97 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>ユキちゃんのAVナビ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Press Start 2P', cursive;
-      background-color: #111;
-      color: #fff;
-      margin: 0;
-      padding: 0;
+      background-color: #ffeef4;
+      font-family: "PixelMplus10-Regular", sans-serif;
+      text-align: center;
+      padding: 20px;
     }
 
     .header {
-      text-align: center;
-      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
     }
 
     .header img.title {
       height: 150px;
     }
 
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 20px;
-      padding: 20px;
+    .header img.yuki {
+      height: 180px;
     }
 
     .search-area {
-      flex-grow: 1;
-      max-width: 600px;
-    }
-
-    .search-bar {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
+      margin-top: 30px;
     }
 
     input[type="text"] {
-      flex-grow: 1;
-      padding: 8px;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 12px;
+      width: 600px;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
     }
 
     button {
-      padding: 10px 16px;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 10px;
-      cursor: pointer;
+      padding: 12px 25px;
+      font-size: 16px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      margin-left: 10px;
     }
 
-    .result-box {
-      border: 2px solid #888;
-      background-color: #222;
-      padding: 10px;
-      min-height: 200px;
-      font-size: 12px;
-      white-space: pre-wrap;
+    #result {
+      margin-top: 30px;
+      padding: 20px;
+      border: 2px dashed #f58fb3;
+      background-color: white;
+      width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+      font-size: 16px;
+      border-radius: 12px;
     }
 
-    .yuki {
-      flex-shrink: 0;
-    }
-
-    .yuki img {
-      height: 180px;
+    @font-face {
+      font-family: "PixelMplus10-Regular";
+      src: url("fonts/PixelMplus10-Regular.woff2") format("woff2");
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <img src="/static/title.png" class="title" alt="ユキちゃんのAVナビ">
+    <img src="title.png" alt="ユキちゃんのAVナビ" class="title">
+    <img src="yuki.png" alt="Yukiちゃん" class="yuki">
   </div>
-  <div class="container">
-    <div class="search-area">
-      <div class="search-bar">
-        <input type="text" id="keywordInput" placeholder="キーワードを入力">
-        <button onclick="search()">検索</button>
-      </div>
-      <div class="result-box" id="resultBox">ここに結果が表示されます</div>
-    </div>
-    <div class="yuki">
-      <img src="/static/yuki.png" alt="Yuki">
-    </div>
+
+  <div class="search-area">
+    <input type="text" id="keyword" placeholder="キーワードを入力（例：制服）">
+    <button onclick="search()">検索</button>
   </div>
+
+  <div id="result">ここに結果が表示されます</div>
 
   <script>
     async function search() {
-      const keyword = document.getElementById("keywordInput").value;
+      const keyword = document.getElementById("keyword").value;
       const response = await fetch("/recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ keywords: [keyword] })
+        body: JSON.stringify({ keywords: [keyword] }),
       });
 
       const data = await response.json();
-      const resultBox = document.getElementById("resultBox");
-      if (data.length === 0) {
-        resultBox.textContent = "該当なしだよ！";
-      } else {
-        resultBox.textContent = data.map(item => JSON.stringify(item, null, 2)).join('\n\n');
-      }
+      const resultArea = document.getElementById("result");
+      resultArea.innerHTML = data.recommendations ? data.recommendations.join("<br>") : "該当なし";
     }
   </script>
 </body>
