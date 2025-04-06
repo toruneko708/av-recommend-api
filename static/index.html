@@ -74,6 +74,37 @@
             font-size: 18px;
             font-family: 'PixelMplus10', sans-serif;
         }
+
+        /* スマホ用の表示調整💓 */
+        @media screen and (max-width: 768px) {
+          .header {
+            flex-direction: column; /* タイトルとユキちゃんを縦並びに💓 */
+            gap: 20px;
+          }
+
+          .header img.title {
+            height: 70px; /* タイトルを少し小さく */
+          }
+
+          .header img.yuki {
+            height: 100px; /* ユキちゃんも少し小さく */
+          }
+
+          .search-area {
+            flex-direction: column; /* 検索窓とボタンを縦並びに💓 */
+            width: 90%;
+            margin: 10px auto;
+          }
+
+          input[type="text"], button {
+            width: 100%; /* 検索窓とボタンを横幅いっぱいに✨ */
+          }
+
+          .result-box {
+            width: 90%; /* 結果表示枠も横幅を調整💓 */
+            font-size: 16px;
+          }
+        }
     </style>
 </head>
 
