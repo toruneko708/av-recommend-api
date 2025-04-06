@@ -1,15 +1,10 @@
-import pandas as pd
-
-def recommend_av(keyword: str) -> str:
-    df = pd.read_csv("sample_av_data.csv")
-
-    # キーワードでタイトルをフィルタ
-    filtered = df[df["タイトル"].str.contains(keyword, na=False)]
-
-    if filtered.empty:
-        return "該当する作品は見つかりませんでした💦"
-
-    # 一致した上位3件を返す（例として）
-    results = filtered.head(3).to_dict(orient="records")
-    output = "\n\n".join([f"🎬 {item['タイトル']}（{item['女優']}, {item['ジャンル']}）" for item in results])
-    return output
+def recommend_av(keyword):
+    # 仮データで検索ワードごとに分岐
+    if keyword == "制服":
+        return {"result": "制服系でオススメなのは「超絶可愛いJKの制服コレクション💓」だよ！"}
+    elif keyword == "ナース":
+        return {"result": "ナース系なら「癒しのナースがいっぱい💓看護天国」がおすすめだよ！"}
+    elif keyword == "メイド":
+        return {"result": "メイド好きのまー君には「極上メイドのご奉仕Time✨」がピッタリだよ💓"}
+    else:
+        return {"result": f"「{keyword}」については、これからユキちゃんがいっぱい調べるね💓"}

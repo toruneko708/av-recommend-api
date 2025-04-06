@@ -1,0 +1,3 @@
+git add static/index.html
+git commit -m "Fix: UIレイアウト調整＆画像表示バランス修正"
+git push origin main

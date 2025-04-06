@@ -9,13 +9,12 @@ app = FastAPI()
 # staticディレクトリをマウント
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# ルートにアクセスすると index.html を表示
 @app.get("/")
 async def read_root():
     return FileResponse("static/index.html")
 
-# レコメンドAPI（仮のデータで動作）
 @app.get("/recommend")
 async def get_recommendation(keyword: str):
-    results = recommend_av(keyword)
-    return results
+    df = pd.read_csv("sample_av_data.csv")
+    results = recommend_av(df, keyword)
+    return {"results": results}
