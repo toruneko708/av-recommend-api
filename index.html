@@ -1,96 +1,116 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ユキちゃんのAVナビ</title>
+
+  <!-- ピクセルフォント読み込み -->
   <style>
     @font-face {
-      font-family: 'PixelFont';
-      src: url('fonts/PixelMplus10-Regular.ttf') format('truetype');
+      font-family: "PixelMplus";
+      src: url("fonts/PixelMplus10-Regular.ttf") format("truetype");
     }
 
     body {
-      font-family: 'PixelFont', monospace;
-      background-color: #fff6f9;
+      margin: 0;
+      font-family: "PixelMplus", monospace;
+      background-color: #fef1f5;
       color: #333;
-      text-align: center;
-      padding: 20px;
     }
 
     .container {
       max-width: 900px;
       margin: 0 auto;
+      padding: 20px;
+      text-align: center;
     }
 
     .header {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 20px;
+      margin-bottom: 20px;
+      position: relative;
     }
 
     .header img.title {
       height: 150px;
     }
 
-    .yuki {
+    .header img.mascot {
       height: 180px;
+      position: absolute;
+      right: -80px;
+      top: 0;
     }
 
     .search-box {
       display: flex;
       justify-content: center;
-      gap: 10px;
-      margin-top: 30px;
       margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    input[type="text"] {
-      font-family: 'PixelFont', monospace;
-      padding: 12px;
-      width: 600px;
+    .search-box input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      font-family: "PixelMplus", monospace;
       border: 2px solid #ccc;
       border-radius: 6px;
-      font-size: 14px;
+      width: 70%;
+      max-width: 500px;
     }
 
-    button {
-      font-family: 'PixelFont', monospace;
-      padding: 12px 24px;
-      background-color: #f272b5;
-      border: none;
+    .search-box button {
+      padding: 10px 30px;
+      font-size: 16px;
+      font-family: "PixelMplus", monospace;
+      background-color: #f27eb4;
       color: white;
-      border-radius: 6px;
-      font-size: 14px;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
     }
 
     .result-box {
-      margin: 0 auto;
-      width: 720px;
-      border: 2px dashed #999;
-      border-radius: 8px;
+      background: white;
+      border: 2px dashed #d4a5b0;
       padding: 20px;
+      border-radius: 12px;
+      text-align: left;
       min-height: 150px;
-      background-color: #fff;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <img src="title.png" alt="ユキちゃんのAVナビ" class="title">
-      <img src="yuki.png" alt="Yukiちゃん" class="yuki">
+      <img src="https://toruneko708.github.io/av-recommend-api/title.png" alt="ユキちゃんのAVナビ" class="title" />
+      <img src="https://toruneko708.github.io/av-recommend-api/yuki.png" alt="ユキちゃん" class="mascot" />
     </div>
 
     <div class="search-box">
-      <input type="text" placeholder="キーワードを入力（例: 制服）" />
-      <button>検索</button>
+      <input type="text" placeholder="キーワードを入力（例：制服）" id="keyword">
+      <button onclick="search()">検索</button>
     </div>
 
     <div class="result-box" id="result">
       ここに検索結果が表示されます
     </div>
   </div>
+
+  <script>
+    function search() {
+      const keyword = document.getElementById("keyword").value;
+      const resultBox = document.getElementById("result");
+      if (keyword.trim() === "") {
+        resultBox.innerText = "キーワードを入力してください。";
+        return;
+      }
+      resultBox.innerText = `「${keyword}」で検索中...（API接続は未実装です）`;
+    }
+  </script>
 </body>
 </html>
