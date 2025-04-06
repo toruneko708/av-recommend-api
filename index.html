@@ -2,114 +2,117 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ユキちゃんのAVナビ</title>
-
-  <!-- ピクセルフォント読み込み -->
   <style>
-    @font-face {
-      font-family: "PixelMplus";
-      src: url("fonts/PixelMplus10-Regular.ttf") format("truetype");
-    }
-
     body {
+      font-family: 'PixelMplus', sans-serif;
+      background-color: #ffeef5;
       margin: 0;
-      font-family: "PixelMplus", monospace;
-      background-color: #fef1f5;
-      color: #333;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
+      padding: 0;
       text-align: center;
     }
 
     .header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      position: relative;
+      margin-top: 30px;
     }
 
     .header img.title {
       height: 150px;
     }
 
-    .header img.mascot {
-      height: 180px;
-      position: absolute;
-      right: -80px;
-      top: 0;
+    .search-area {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 20px;
+      gap: 20px;
+      position: relative;
     }
 
     .search-box {
       display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      gap: 10px;
+      width: 700px;
     }
 
-    .search-box input[type="text"] {
-      padding: 10px;
-      font-size: 16px;
-      font-family: "PixelMplus", monospace;
-      border: 2px solid #ccc;
-      border-radius: 6px;
-      width: 70%;
-      max-width: 500px;
+    .search-box input {
+      flex-grow: 1;
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px 0 0 10px;
+      border: 1px solid #ccc;
     }
 
     .search-box button {
-      padding: 10px 30px;
-      font-size: 16px;
-      font-family: "PixelMplus", monospace;
-      background-color: #f27eb4;
-      color: white;
+      padding: 12px 30px;
+      font-size: 18px;
+      border-radius: 0 10px 10px 0;
       border: none;
-      border-radius: 8px;
+      background-color: #f280b0;
+      color: white;
       cursor: pointer;
     }
 
-    .result-box {
-      background: white;
-      border: 2px dashed #d4a5b0;
+    .yuki {
+      position: absolute;
+      top: -30px;
+      right: -100px;
+    }
+
+    .yuki img {
+      height: 180px;
+    }
+
+    .output {
+      width: 700px;
+      min-height: 200px;
+      margin: 30px auto;
       padding: 20px;
-      border-radius: 12px;
+      background-color: white;
+      border: 2px solid #f5a3c2;
+      border-radius: 15px;
       text-align: left;
-      min-height: 150px;
+      font-size: 18px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <img src="https://toruneko708.github.io/av-recommend-api/title.png" alt="ユキちゃんのAVナビ" class="title" />
-      <img src="https://toruneko708.github.io/av-recommend-api/yuki.png" alt="ユキちゃん" class="mascot" />
-    </div>
+  <div class="header">
+    <img src="title.png" alt="ユキちゃんのAVナビ" class="title">
+  </div>
 
+  <div class="search-area">
     <div class="search-box">
-      <input type="text" placeholder="キーワードを入力（例：制服）" id="keyword">
-      <button onclick="search()">検索</button>
+      <input id="keyword" type="text" placeholder="キーワードを入力（例: 制服）">
+      <button onclick="send()">出力</button>
     </div>
-
-    <div class="result-box" id="result">
-      ここに検索結果が表示されます
+    <div class="yuki">
+      <img src="yuki.png" alt="ユキちゃん">
     </div>
   </div>
 
+  <div id="output" class="output">ここに出力結果が表示されます</div>
+
   <script>
-    function search() {
-      const keyword = document.getElementById("keyword").value;
-      const resultBox = document.getElementById("result");
-      if (keyword.trim() === "") {
-        resultBox.innerText = "キーワードを入力してください。";
-        return;
+    async function send() {
+      const kw = document.getElementById("keyword").value;
+      const response = await fetch("/recommend", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ keywords: [kw] }),
+      });
+
+      const result = await response.json();
+      const output = document.getElementById("output");
+
+      if (result.results && result.results.length > 0) {
+        output.innerHTML = result.results.map(
+          r => `<p>🎬 ${r.title}（出演: ${r.actress}）<br>🔎 キーワード一致: ${r.matched.join(", ")}</p>`
+        ).join("<hr>");
+      } else {
+        output.innerText = "一致する作品が見つかりませんでした。";
       }
-      resultBox.innerText = `「${keyword}」で検索中...（API接続は未実装です）`;
     }
   </script>
 </body>
