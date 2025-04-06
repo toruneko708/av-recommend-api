@@ -1,35 +1,31 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from typing import List
-import pandas as pd
 from fastapi.responses import FileResponse
-import os
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
+import pandas as pd
 
 app = FastAPI()
 
+# 🔹 静的ファイル（画像・HTML）の公開設定
+app.mount("/static", StaticFiles(directory="."), name="static")
 
-class RecommendRequest(BaseModel):
-    keywords: List[str]
-
-
-@app.post("/recommend")
-async def recommend_api(req: RecommendRequest):
-    df = pd.read_csv("sample_av_data.csv")
-
-    def match_keywords(row):
-        matched = [kw for kw in req.keywords if kw in row["title"]]
-        return matched, len(matched)
-
-    df[["matched", "score"]] = df.apply(
-        lambda row: pd.Series(match_keywords(row)), axis=1
-    )
-    df = df[df["score"] > 0].sort_values(by="score", ascending=False)
-
-    return {
-        "results": df[["title", "actress", "matched", "score"]].to_dict(orient="records")
-    }
-
-
+# 🔹 ルートで index.html を返す
 @app.get("/")
-def read_root():
-    return FileResponse(os.path.join("index.html"))
+async def read_index():
+    return FileResponse("index.html")
+
+# 🔹 リクエストボディ用モデル
+class RecommendRequest(BaseModel):
+    keywords: list[str]
+
+# 🔹 推薦ロジックのエンドポイント
+@app.post("/recommend")
+async def recommend_api(recommend_request: RecommendRequest):
+    df = pd.read_csv("sample_av_data.csv")
+    keywords = recommend_request.keywords
+
+    # 🔍 検索ワードにヒットするデータをフィルタ
+    filtered_df = df[df.apply(lambda row: any(kw in str(row).lower() for kw in keywords), axis=1)]
+
+    # 上位5件を返す（なければ空）
+    return filtered_df.head(5).to_dict(orient="records")
