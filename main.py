@@ -2,11 +2,15 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
 import pandas as pd
+from fastapi.responses import FileResponse
+import os
 
 app = FastAPI()
 
+
 class RecommendRequest(BaseModel):
     keywords: List[str]
+
 
 @app.post("/recommend")
 async def recommend_api(req: RecommendRequest):
@@ -24,3 +28,8 @@ async def recommend_api(req: RecommendRequest):
     return {
         "results": df[["title", "actress", "matched", "score"]].to_dict(orient="records")
     }
+
+
+@app.get("/")
+def read_root():
+    return FileResponse(os.path.join("index.html"))
