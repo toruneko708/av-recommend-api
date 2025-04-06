@@ -1,86 +1,97 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ユキちゃんのAVナビ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
-  <style>
-    body {
-      background-color: #ffeef5;
-      font-family: 'Press Start 2P', sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-    }
-    .header img.title {
-      height: 100px;
-    }
-    .header img.yuki {
-      height: 140px;
-    }
-    .search-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 10px;
-      margin-bottom: 20px;
-    }
-    input[type="text"] {
-      font-family: 'Press Start 2P', sans-serif;
-      padding: 10px;
-      font-size: 10px;
-      width: 50%;
-      border: none;
-      border-radius: 5px 0 0 5px;
-    }
-    button {
-      font-family: 'Press Start 2P', sans-serif;
-      padding: 10px;
-      font-size: 10px;
-      border: none;
-      border-radius: 0 5px 5px 0;
-      background-color: hotpink;
-      color: white;
-      cursor: pointer;
-    }
-    .output {
-      margin: 20px auto;
-      padding: 20px;
-      width: 70%;
-      min-height: 100px;
-      background-color: white;
-      border: 2px dashed hotpink;
-      border-radius: 10px;
-    }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <img src="static/title.png" alt="ユキちゃんのAVナビ" class="title" />
-    <img src="static/yuki.png" alt="Yukiちゃん" class="yuki" />
-  </div>
-  <div class="search-container">
-    <input type="text" id="keyword" placeholder="キーワードを入力（例：制服）" />
-    <button onclick="search()">検索</button>
-  </div>
-  <div class="output" id="output">ここに結果が表示されます</div>
 
-  <script>
-    async function search() {
-      const keyword = document.getElementById("keyword").value;
-      const response = await fetch(`/recommend?keyword=${encodeURIComponent(keyword)}`);
-      const data = await response.json();
-      const output = document.getElementById("output");
-      output.innerHTML = data.results.length
-        ? data.results.map(item => `<div>${item}</div>`).join("")
-        : "該当する結果が見つかりませんでした💦";
-    }
-  </script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユキちゃんのAVナビ</title>
+    <style>
+        body {
+            background-color: #ffeff5;
+            font-family: 'PixelMplus10', sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .header img.title {
+            height: 100px;
+        }
+
+        .header img.yuki {
+            height: 140px;
+        }
+
+        .search-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            width: 600px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .result-box {
+            margin: 30px auto;
+            width: 80%;
+            min-height: 200px;
+            border: 3px dashed #ff69b4;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: white;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="/static/title.png" alt="ユキちゃんのAVナビ" class="title">
+        <img src="/static/yuki.png" alt="Yukiちゃん" class="yuki">
+    </div>
+
+    <div class="search-area">
+        <input type="text" id="keyword" placeholder="キーワードを入力（例：制服）">
+        <button onclick="searchAV()">検索</button>
+    </div>
+
+    <div class="result-box" id="result">
+        ここに結果が表示されます
+    </div>
+
+    <script>
+        async function searchAV() {
+            const keyword = document.getElementById("keyword").value;
+            const response = await fetch(`/recommend?keyword=${encodeURIComponent(keyword)}`);
+            const data = await response.json();
+            document.getElementById("result").innerText = data.result || '該当する作品が見つかりませんでした。';
+        }
+    </script>
 </body>
+
 </html>
