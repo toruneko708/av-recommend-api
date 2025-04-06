@@ -29,10 +29,12 @@
 
         .header img.title {
             height: 180px;
+            cursor: pointer;
         }
 
         .header img.yuki {
             height: 180px;
+            cursor: pointer;
         }
 
         .search-area {
@@ -75,12 +77,11 @@
             font-family: 'PixelMplus10', sans-serif;
         }
 
-        /* スマホ用の表示調整💓 */
         @media screen and (max-width: 768px) {
             .header {
                 gap: 10px;
                 margin-top: 20px;
-                flex-direction: row; /* 横並びに戻したよ💓 */
+                flex-direction: row;
                 justify-content: center;
                 align-items: center;
             }
@@ -102,11 +103,11 @@
 
             input[type="text"],
             button {
-                width: 95%; /* 少し余白を追加💓 */
+                width: 95%;
             }
 
             .result-box {
-                width: 95%; /* 少し余白を追加💓 */
+                width: 95%;
                 font-size: 16px;
             }
         }
@@ -115,8 +116,8 @@
 
 <body>
     <div class="header">
-        <img src="/static/title.png" alt="ユキちゃんのAVナビ" class="title">
-        <img src="/static/yuki.png" alt="Yukiちゃん" class="yuki">
+        <img src="/static/title.png" alt="ユキちゃんのAVナビ" class="title" onclick="location.reload()">
+        <img src="/static/yuki.png" alt="Yukiちゃん" class="yuki" onclick="location.reload()">
     </div>
 
     <div class="search-area">

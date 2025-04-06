@@ -74,6 +74,42 @@
             font-size: 18px;
             font-family: 'PixelMplus10', sans-serif;
         }
+
+        /* スマホ用の表示調整💓 */
+        @media screen and (max-width: 768px) {
+            .header {
+                gap: 10px;
+                margin-top: 20px;
+                flex-direction: row; /* 横並びに戻したよ💓 */
+                justify-content: center;
+                align-items: center;
+            }
+
+            .header img.title {
+                height: 70px;
+            }
+
+            .header img.yuki {
+                height: 100px;
+            }
+
+            .search-area {
+                flex-direction: column;
+                width: 90%;
+                margin: 20px auto;
+                gap: 8px;
+            }
+
+            input[type="text"],
+            button {
+                width: 95%; /* 少し余白を追加💓 */
+            }
+
+            .result-box {
+                width: 95%; /* 少し余白を追加💓 */
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 
