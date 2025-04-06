@@ -1,81 +1,96 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AVレコメンド</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>ユキちゃんのAVナビ</title>
   <style>
+    @font-face {
+      font-family: 'PixelFont';
+      src: url('fonts/PixelMplus10-Regular.ttf') format('truetype');
+    }
+
     body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #fff;
+      font-family: 'PixelFont', monospace;
+      background-color: #fff6f9;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .header img.title {
+      height: 150px;
+    }
+
+    .yuki {
+      height: 180px;
+    }
+
+    .search-box {
       display: flex;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 16px;
-      padding: 40px;
-      max-width: 500px;
-      width: 90%;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-    }
-    h1 {
-      font-size: 28px;
+      gap: 10px;
+      margin-top: 30px;
       margin-bottom: 20px;
-      text-align: center;
-      color: #00fff7;
     }
-    input {
-      width: 100%;
+
+    input[type="text"] {
+      font-family: 'PixelFont', monospace;
       padding: 12px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      margin-bottom: 16px;
-      background: #111;
-      color: #0ff;
-      outline: none;
+      width: 600px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
     }
+
     button {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
+      font-family: 'PixelFont', monospace;
+      padding: 12px 24px;
+      background-color: #f272b5;
       border: none;
-      border-radius: 8px;
-      background: #0ff;
-      color: #000;
-      font-weight: bold;
+      color: white;
+      border-radius: 6px;
+      font-size: 14px;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
-    button:hover {
-      background: #00c9c9;
-    }
-    .result {
-      margin-top: 24px;
-      padding: 16px;
-      background: #111;
+
+    .result-box {
+      margin: 0 auto;
+      width: 720px;
+      border: 2px dashed #999;
       border-radius: 8px;
-      border: 1px solid #0ff;
-      min-height: 60px;
-      color: #0ff;
-      font-family: monospace;
+      padding: 20px;
+      min-height: 150px;
+      background-color: #fff;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>AVレコメンド</h1>
-    <input type="text" placeholder="キーワードを入力（例: 制服）" />
-    <button>出力</button>
-    <div class="result">ここに出力結果が表示されます</div>
+    <div class="header">
+      <img src="title.png" alt="ユキちゃんのAVナビ" class="title">
+      <img src="yuki.png" alt="Yukiちゃん" class="yuki">
+    </div>
+
+    <div class="search-box">
+      <input type="text" placeholder="キーワードを入力（例: 制服）" />
+      <button>検索</button>
+    </div>
+
+    <div class="result-box" id="result">
+      ここに検索結果が表示されます
+    </div>
   </div>
 </body>
 </html>
