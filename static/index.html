@@ -77,33 +77,38 @@
 
         /* スマホ用の表示調整💓 */
         @media screen and (max-width: 768px) {
-          .header {
-            flex-direction: column; /* タイトルとユキちゃんを縦並びに💓 */
-            gap: 20px;
-          }
+            .header {
+                gap: 10px;
+                margin-top: 20px;
+                flex-direction: row; /* 横並びに戻したよ💓 */
+                justify-content: center;
+                align-items: center;
+            }
 
-          .header img.title {
-            height: 70px; /* タイトルを少し小さく */
-          }
+            .header img.title {
+                height: 70px;
+            }
 
-          .header img.yuki {
-            height: 100px; /* ユキちゃんも少し小さく */
-          }
+            .header img.yuki {
+                height: 100px;
+            }
 
-          .search-area {
-            flex-direction: column; /* 検索窓とボタンを縦並びに💓 */
-            width: 90%;
-            margin: 10px auto;
-          }
+            .search-area {
+                flex-direction: column;
+                width: 90%;
+                margin: 20px auto;
+                gap: 8px;
+            }
 
-          input[type="text"], button {
-            width: 100%; /* 検索窓とボタンを横幅いっぱいに✨ */
-          }
+            input[type="text"],
+            button {
+                width: 95%; /* 少し余白を追加💓 */
+            }
 
-          .result-box {
-            width: 90%; /* 結果表示枠も横幅を調整💓 */
-            font-size: 16px;
-          }
+            .result-box {
+                width: 95%; /* 少し余白を追加💓 */
+                font-size: 16px;
+            }
         }
     </style>
 </head>
